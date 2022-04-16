@@ -44,15 +44,7 @@ def compute_dataset_mean_and_std(dataset, max_num_samples=30000, num_workers=4):
             dataset_std.cpu().numpy())
 
 
-def main():
-    cfg = Config().parse('eval --dataset kitti'.split(' '))
-    dataset = load_dataset(cfg.dataset)('trainval', cfg)
-
-    mean, std = compute_dataset_mean_and_std(dataset)
-
-    print('Dataset\'s RGB mean: ', mean)
-    print('Dataset\'s RGB std: ', std)
 
 
-if __name__ == '__main__':
-    main()
+
+

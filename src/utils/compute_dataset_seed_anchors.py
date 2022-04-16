@@ -48,14 +48,14 @@ def compute_dataset_anchors_seed(dataset, anchors_per_grid=9,
     return anchors_seed.astype(np.int32)
 
 
-def main():
-    cfg = Config().parse('eval --dataset kitti'.split(' '))
-    dataset = load_dataset(cfg.dataset)('trainval', cfg)
+# def main():
+#     cfg = Config().parse('eval --dataset kitti'.split(' '))
+#     dataset = load_dataset(cfg.dataset)('trainval', cfg)
 
-    anchors_seed = compute_dataset_anchors_seed(dataset)
+#     anchors_seed = compute_dataset_anchors_seed(dataset)
 
-    print('Dataset\'s anchors seed: ', anchors_seed)
+#     print('Dataset\'s anchors seed: ', anchors_seed)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
