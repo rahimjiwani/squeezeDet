@@ -42,7 +42,7 @@ def demo(cfg):
 
     # detection
     for path in tqdm.tqdm(sample_image_paths):
-        image = cv2.imread(path).astype(np.float32)#skimage.io.imread(path).astype(np.float32)
+        image = skimage.io.imread(path).astype(np.float32)
 
         print(image.shape)
         image_meta = {'image_id': os.path.basename(path)[:-4],
