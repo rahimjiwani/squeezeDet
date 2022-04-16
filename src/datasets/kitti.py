@@ -12,21 +12,21 @@ class KITTI(BaseDataset):
     def __init__(self, phase, cfg):
         super(KITTI, self).__init__(phase, cfg)
 
-        self.input_size = (384, 1248)  # (height, width), both dividable by 16
-        self.class_names = ('Car', 'Pedestrian', 'Cyclist')
-        self.rgb_mean = np.array([93.877, 98.801, 95.923], dtype=np.float32).reshape(1, 1, 3)
-        self.rgb_std = np.array([78.782, 80.130, 81.200], dtype=np.float32).reshape(1, 1, 3)
+        self.input_size = (736, 992)  # (height, width), both dividable by 16
+        self.class_names = ['Car']#('Car', 'Pedestrian', 'Cyclist')
+        self.rgb_mean = np.array([103.67547,  102.690926,  88.613884], dtype=np.float32).reshape(1, 1, 3)
+        self.rgb_std = np.array([34.321716, 33.12034,  40.23589], dtype=np.float32).reshape(1, 1, 3)
 
         self.num_classes = len(self.class_names)
-        self.class_ids_dict = {cls_name: cls_id for cls_id, cls_name in enumerate(self.class_names)}
-        print("cfg data dir =================== ", cfg.data_dir)
+        self.class_ids_dict = {'Car':0}#{cls_name: cls_id for cls_id, cls_name in enumerate(self.class_names)}
+        # print("class ids dict ============",self.class_ids_dict)
         self.data_dir = os.path.join(cfg.data_dir, 'kitti')
         self.sample_ids, self.sample_set_path = self.get_sample_ids()
 
         self.grid_size = tuple(x // 16 for x in self.input_size)  # anchors grid
-        self.anchors_seed = np.array([[34, 30], [75, 45], [38, 90],
-                                      [127, 68], [80, 174], [196, 97],
-                                      [194, 178], [283, 156], [381, 185]], dtype=np.float32)
+        self.anchors_seed = np.array([[47, 42], [67, 71], [92, 69],
+                                      [100, 93], [118, 158], [162, 122],
+                                      [122, 186], [271, 142], [333, 123]], dtype=np.float32)
         self.anchors = generate_anchors(self.grid_size, self.input_size, self.anchors_seed)
         self.anchors_per_grid = self.anchors_seed.shape[0]
         self.num_anchors = self.anchors.shape[0]
@@ -58,7 +58,6 @@ class KITTI(BaseDataset):
         ann_path = os.path.join(self.data_dir, 'training/label_2', ann_id + '.txt')
         with open(ann_path, 'r') as fp:
             annotations = fp.readlines()
-
         annotations = [ann.strip().split(' ') for ann in annotations]
         class_ids, boxes = [], []
         for ann in annotations:
