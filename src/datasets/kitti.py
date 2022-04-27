@@ -14,8 +14,8 @@ class KITTI(BaseDataset):
 
         self.input_size = (736, 992)  # (height, width), both dividable by 16
         self.class_names = ['Car']#('Car', 'Pedestrian', 'Cyclist')
-        self.rgb_mean = np.array([103.67547,  102.690926,  88.613884], dtype=np.float32).reshape(1, 1, 3)
-        self.rgb_std = np.array([34.321716, 33.12034,  40.23589], dtype=np.float32).reshape(1, 1, 3)
+        self.rgb_mean = np.array([106.25328,  104.657425,  89.984856], dtype=np.float32).reshape(1, 1, 3)
+        self.rgb_std = np.array([35.9642, 34.761078,  41.459267], dtype=np.float32).reshape(1, 1, 3)
 
         self.num_classes = len(self.class_names)
         self.class_ids_dict = {'Car':0}#{cls_name: cls_id for cls_id, cls_name in enumerate(self.class_names)}
@@ -24,9 +24,9 @@ class KITTI(BaseDataset):
         self.sample_ids, self.sample_set_path = self.get_sample_ids()
 
         self.grid_size = tuple(x // 16 for x in self.input_size)  # anchors grid
-        self.anchors_seed = np.array([[47, 42], [67, 71], [92, 69],
-                                      [100, 93], [118, 158], [162, 122],
-                                      [122, 186], [271, 142], [333, 123]], dtype=np.float32)
+        self.anchors_seed = np.array([[39,32], [54, 50], [71, 72], [95, 81],
+                                      [145, 109], [104, 174], [145, 168],
+                                      [270, 140], [340, 125]], dtype=np.float32)
         self.anchors = generate_anchors(self.grid_size, self.input_size, self.anchors_seed)
         self.anchors_per_grid = self.anchors_seed.shape[0]
         self.num_anchors = self.anchors.shape[0]
